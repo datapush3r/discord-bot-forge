@@ -1,0 +1,147 @@
+{{define "content"}}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-tachometer-alt text-primary"></i> Dashboard
+        </h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{.Bot.Commands}}</h4>
+                        <p class="card-text">Commands</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-terminal fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{.Bot.Modules}}</h4>
+                        <p class="card-text">Modules</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-puzzle-piece fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{.Bot.Middleware}}</h4>
+                        <p class="card-text">Middleware</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{.Bot.Version}}</h4>
+                        <p class="card-text">Version</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-code-branch fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line text-primary"></i> Bot Status
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Status:</strong> 
+                            <span class="badge bg-success" id="bot-status">Running</span>
+                        </p>
+                        <p><strong>Uptime:</strong> <span id="bot-uptime">{{.Bot.Uptime}}</span></p>
+                        <p><strong>Last Update:</strong> <span id="last-update">{{.Bot.LastUpdate.Format "15:04:05"}}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Messages Processed:</strong> <span id="messages-count">{{index .Bot.Stats "messages"}}</span></p>
+                        <p><strong>Commands Executed:</strong> <span id="commands-count">{{index .Bot.Stats "commands_executed"}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-cogs text-primary"></i> Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success" onclick="restartBot()">
+                        <i class="fas fa-redo"></i> Restart Bot
+                    </button>
+                    <button class="btn btn-warning" onclick="stopBot()">
+                        <i class="fas fa-stop"></i> Stop Bot
+                    </button>
+                    <button class="btn btn-info" onclick="refreshStatus()">
+                        <i class="fas fa-sync"></i> Refresh Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list text-primary"></i> Recent Activity
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="activity-log" class="activity-log">
+                    <div class="activity-item">
+                        <i class="fas fa-info-circle text-info"></i>
+                        <span class="ms-2">Bot started successfully</span>
+                        <small class="text-muted ms-2">{{.Bot.LastUpdate.Format "15:04:05"}}</small>
+                    </div>
+                    <div class="activity-item">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span class="ms-2">All modules loaded</span>
+                        <small class="text-muted ms-2">{{.Bot.LastUpdate.Add -2 * time.Minute | printf "%.0f"}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

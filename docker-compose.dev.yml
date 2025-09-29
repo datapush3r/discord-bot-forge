@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  discord-bot-forge-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: discord-bot-forge-dev
+    restart: unless-stopped
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - BOT_OWNER_ID=${BOT_OWNER_ID}
+      - DEBUG=true
+      - WEB_PORT=8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - /app/vendor
+    networks:
+      - discord-bot-network
+    command: ["go", "run", "./examples/simple_bot/main.go"]
+
+networks:
+  discord-bot-network:
+    driver: bridge

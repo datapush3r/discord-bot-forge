@@ -1,0 +1,171 @@
+{{define "content"}}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-cog text-primary"></i> Bot Settings
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-sliders-h text-primary"></i> General Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="settings-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="bot-prefix" class="form-label">Command Prefix</label>
+                                <input type="text" class="form-control" id="bot-prefix" value="{{.Config.Prefix}}">
+                                <div class="form-text">The prefix used for bot commands (e.g., !, ?, /)</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bot-version" class="form-label">Bot Version</label>
+                                <input type="text" class="form-control" id="bot-version" value="{{.Config.Version}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="owner-id" class="form-label">Owner ID</label>
+                                <input type="text" class="form-control" id="owner-id" value="{{.Config.OwnerID}}">
+                                <div class="form-text">Discord user ID of the bot owner</div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="debug-mode" {{if .Config.DebugMode}}checked{{end}}>
+                                    <label class="form-check-label" for="debug-mode">Debug Mode</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-shield-alt text-primary"></i> Security Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="rate-limiting" checked>
+                        <label class="form-check-label" for="rate-limiting">Rate Limiting</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="permission-checks" checked>
+                        <label class="form-check-label" for="permission-checks">Permission Checks</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="logging-enabled" checked>
+                        <label class="form-check-label" for="logging-enabled">Command Logging</label>
+                    </div>
+                </div>
+                <button class="btn btn-warning btn-sm" onclick="resetSecuritySettings()">
+                    <i class="fas fa-undo"></i> Reset to Defaults
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-database text-primary"></i> Database Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="db-url" class="form-label">Database URL</label>
+                    <input type="text" class="form-control" id="db-url" placeholder="postgres://user:pass@localhost/db">
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="db-enabled">
+                        <label class="form-check-label" for="db-enabled">Enable Database</label>
+                    </div>
+                </div>
+                <button class="btn btn-success btn-sm" onclick="testDatabaseConnection()">
+                    <i class="fas fa-plug"></i> Test Connection
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-server text-primary"></i> Web Interface Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="web-port" class="form-label">Web Port</label>
+                    <input type="number" class="form-control" id="web-port" value="8080">
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="web-enabled" checked>
+                        <label class="form-check-label" for="web-enabled">Enable Web Interface</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="websocket-enabled" checked>
+                        <label class="form-check-label" for="websocket-enabled">Enable WebSocket</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-exclamation-triangle text-warning"></i> Danger Zone
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-warning w-100" onclick="exportConfig()">
+                            <i class="fas fa-download"></i> Export Configuration
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-info w-100" onclick="importConfig()">
+                            <i class="fas fa-upload"></i> Import Configuration
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-danger w-100" onclick="resetAllSettings()">
+                            <i class="fas fa-trash"></i> Reset All Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

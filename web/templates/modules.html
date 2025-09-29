@@ -1,0 +1,143 @@
+{{define "content"}}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-puzzle-piece text-primary"></i> Modules Management
+        </h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list text-primary"></i> Installed Modules
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Version</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modules-table">
+                            {{range .Modules}}
+                            <tr>
+                                <td>
+                                    <strong>{{.Name}}</strong>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{.Version}}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">{{.Status}}</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="showModuleDetails('{{.Name}}')">
+                                        <i class="fas fa-eye"></i> Details
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-warning" onclick="restartModule('{{.Name}}')">
+                                        <i class="fas fa-redo"></i> Restart
+                                    </button>
+                                </td>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle text-primary"></i> Module Details
+                </h5>
+            </div>
+            <div class="card-body" id="module-details">
+                <div class="text-center text-muted">
+                    <i class="fas fa-mouse-pointer fa-3x mb-3"></i>
+                    <p>Select a module to view details</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-download text-primary"></i> Available Modules
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-database text-primary"></i> Database Module
+                                </h5>
+                                <p class="card-text">Provides database connectivity and ORM functionality.</p>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-download"></i> Install
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-music text-success"></i> Music Module
+                                </h5>
+                                <p class="card-text">Add music playback capabilities to your bot.</p>
+                                <button class="btn btn-success btn-sm">
+                                    <i class="fas fa-download"></i> Install
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-chart-bar text-warning"></i> Analytics Module
+                                </h5>
+                                <p class="card-text">Track and analyze bot usage statistics.</p>
+                                <button class="btn btn-warning btn-sm">
+                                    <i class="fas fa-download"></i> Install
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-shield-alt text-info"></i> Security Module
+                                </h5>
+                                <p class="card-text">Enhanced security features and monitoring.</p>
+                                <button class="btn btn-info btn-sm">
+                                    <i class="fas fa-download"></i> Install
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

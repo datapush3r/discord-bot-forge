@@ -1,0 +1,125 @@
+{{define "content"}}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-file-alt text-primary"></i> Bot Logs
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list text-primary"></i> Live Logs
+                </h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="clearLogs()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <button class="btn btn-sm btn-outline-success" onclick="downloadLogs()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <div class="form-check form-switch d-inline-block ms-3">
+                        <input class="form-check-input" type="checkbox" id="auto-scroll" checked>
+                        <label class="form-check-label" for="auto-scroll">Auto-scroll</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="logs-container" class="logs-container">
+                    <div class="log-entry">
+                        <span class="log-time">[15:04:05]</span>
+                        <span class="log-level info">[INFO]</span>
+                        <span class="log-message">Bot started successfully</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-time">[15:04:06]</span>
+                        <span class="log-level success">[SUCCESS]</span>
+                        <span class="log-message">All modules loaded</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-time">[15:04:10]</span>
+                        <span class="log-level info">[INFO]</span>
+                        <span class="log-message">Command executed: ping by user#1234</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-time">[15:04:15]</span>
+                        <span class="log-level warning">[WARNING]</span>
+                        <span class="log-message">Rate limit exceeded for user#5678</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-filter text-primary"></i> Log Filters
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="log-level" class="form-label">Log Level</label>
+                    <select class="form-select" id="log-level">
+                        <option value="all">All Levels</option>
+                        <option value="error">Error Only</option>
+                        <option value="warning">Warning & Error</option>
+                        <option value="info">Info, Warning & Error</option>
+                        <option value="debug">Debug & All</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="log-search" class="form-label">Search</label>
+                    <input type="text" class="form-control" id="log-search" placeholder="Search logs...">
+                </div>
+                <button class="btn btn-primary" onclick="applyFilters()">
+                    <i class="fas fa-search"></i> Apply Filters
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-pie text-primary"></i> Log Statistics
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-3">
+                        <div class="border rounded p-2">
+                            <h6 class="text-success">Info</h6>
+                            <h4 class="text-success" id="info-count">45</h4>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-2">
+                            <h6 class="text-warning">Warning</h6>
+                            <h4 class="text-warning" id="warning-count">3</h4>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-2">
+                            <h6 class="text-danger">Error</h6>
+                            <h4 class="text-danger" id="error-count">1</h4>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-2">
+                            <h6 class="text-info">Total</h6>
+                            <h4 class="text-info" id="total-count">49</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
